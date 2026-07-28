@@ -71,7 +71,7 @@
     }
   } catch (e) {}
 
-  /* ---------- footer year ---------- */
-  var footYear = document.getElementById("footYear");
-  if (footYear) footYear.textContent = "© " + new Date().getFullYear() + " Alonva. Технологии для спорта.";
+  /* ---------- footer year (copyright text itself is localized per-page in HTML) ---------- */
+  var footYearNum = document.getElementById("footYearNum");
+  if (footYearNum) footYearNum.textContent = new Date().getFullYear();
 })();
