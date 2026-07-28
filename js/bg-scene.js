@@ -21,22 +21,64 @@
   var CAMERA_RADIUS = 6.2;
   camera.position.set(0, 0, CAMERA_RADIUS);
 
-  // small lit sphere baked to a cheap environment map — stands in for drei's
-  // <Environment>, no external HDRI file to fetch
+  // Ported from three.js's own examples/jsm/environments/RoomEnvironment —
+  // a lit room baked to a PMREM texture. This is the standard no-HDRI-file
+  // stand-in for drei's <Environment>, and gives MeshPhysicalMaterial real
+  // reflections/highlights to read against instead of a flat fake sky.
   function buildEnvironment() {
     var pmrem = new THREE.PMREMGenerator(renderer);
     var envScene = new THREE.Scene();
-    envScene.add(new THREE.Mesh(
-      new THREE.SphereGeometry(20, 16, 16),
-      new THREE.MeshBasicMaterial({ color: 0x0d1420, side: THREE.BackSide })
-    ));
-    var rim = new THREE.PointLight(0x2f7dff, 40, 40);
-    rim.position.set(6, 5, 5);
-    envScene.add(rim);
-    var fill = new THREE.PointLight(0x39ff8f, 18, 40);
-    fill.position.set(-6, -3, 4);
-    envScene.add(fill);
-    var tex = pmrem.fromScene(envScene, 0.06).texture;
+
+    var geometry = new THREE.BoxGeometry();
+    geometry.deleteAttribute("uv");
+
+    function areaLightMaterial(intensity) {
+      var m = new THREE.MeshBasicMaterial();
+      m.color.setScalar(intensity);
+      return m;
+    }
+
+    var mainIntensity = renderer._useLegacyLights === false ? 900 : 5;
+    var mainLight = new THREE.PointLight(0xffffff, mainIntensity, 28, 2);
+    mainLight.position.set(0.418, 16.199, 0.3);
+    envScene.add(mainLight);
+
+    var room = new THREE.Mesh(geometry, new THREE.MeshStandardMaterial({ side: THREE.BackSide }));
+    room.position.set(-0.757, 13.219, 0.717);
+    room.scale.set(31.713, 28.305, 28.591);
+    envScene.add(room);
+
+    var boxMaterial = new THREE.MeshStandardMaterial();
+    [
+      { p: [-10.906, 2.009, 1.846], r: [0, -0.195, 0], s: [2.328, 7.905, 4.651] },
+      { p: [-5.607, -0.754, -0.758], r: [0, 0.994, 0], s: [1.97, 1.534, 3.955] },
+      { p: [6.167, 0.857, 7.803], r: [0, 0.561, 0], s: [3.927, 6.285, 3.687] },
+      { p: [-2.017, 0.018, 6.124], r: [0, 0.333, 0], s: [2.002, 4.566, 2.064] },
+      { p: [2.291, -0.756, -2.621], r: [0, -0.286, 0], s: [1.546, 1.552, 1.496] },
+      { p: [-2.193, -0.369, -5.547], r: [0, 0.516, 0], s: [3.875, 3.487, 2.986] }
+    ].forEach(function (b) {
+      var box = new THREE.Mesh(geometry, boxMaterial);
+      box.position.set(b.p[0], b.p[1], b.p[2]);
+      box.rotation.set(b.r[0], b.r[1], b.r[2]);
+      box.scale.set(b.s[0], b.s[1], b.s[2]);
+      envScene.add(box);
+    });
+
+    [
+      { p: [-16.116, 14.37, 8.208], s: [0.1, 2.428, 2.739], i: 50 },
+      { p: [-16.109, 18.021, -8.207], s: [0.1, 2.425, 2.751], i: 50 },
+      { p: [14.904, 12.198, -1.832], s: [0.15, 4.265, 6.331], i: 17 },
+      { p: [-0.462, 8.89, 14.52], s: [4.38, 5.441, 0.088], i: 43 },
+      { p: [3.235, 11.486, -12.541], s: [2.5, 2.0, 0.1], i: 20 },
+      { p: [0.0, 20.0, 0.0], s: [1.0, 0.1, 1.0], i: 100 }
+    ].forEach(function (l) {
+      var mesh = new THREE.Mesh(geometry, areaLightMaterial(l.i));
+      mesh.position.set(l.p[0], l.p[1], l.p[2]);
+      mesh.scale.set(l.s[0], l.s[1], l.s[2]);
+      envScene.add(mesh);
+    });
+
+    var tex = pmrem.fromScene(envScene, 0.04).texture;
     pmrem.dispose();
     return tex;
   }

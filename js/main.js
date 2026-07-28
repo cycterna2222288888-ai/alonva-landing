@@ -1,4 +1,4 @@
-/* main.js — UI behavior: mobile nav, reveal-on-scroll, stats tabs, contact form. */
+/* main.js — UI behavior: mobile nav, reveal-on-scroll, stats tabs. */
 (function () {
   "use strict";
 
@@ -67,40 +67,6 @@
       window.addEventListener("resize", function () {
         var current = document.querySelector(".tab.is-active");
         if (current) movePill(current);
-      });
-    }
-  } catch (e) {}
-
-  /* ---------- contact form (no backend wired yet — simulated submit) ---------- */
-  try {
-    var form = document.getElementById("contactForm");
-    var fields = document.getElementById("formFields");
-    var success = document.getElementById("formSuccess");
-    var errorEl = document.getElementById("formError");
-    var btn = document.getElementById("formBtn");
-    var btnLabel = document.getElementById("formBtnLabel");
-    var nameInput = document.getElementById("fieldName");
-    var contactInput = document.getElementById("fieldContact");
-
-    if (form && fields && success && btn) {
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-
-        var nameOk = nameInput.value.trim().length >= 2;
-        var contactOk = contactInput.value.trim().length >= 5;
-        if (!nameOk || !contactOk) {
-          if (errorEl) errorEl.hidden = false;
-          return;
-        }
-        if (errorEl) errorEl.hidden = true;
-
-        btn.disabled = true;
-        if (btnLabel) btnLabel.textContent = "Отправляем…";
-
-        setTimeout(function () {
-          fields.hidden = true;
-          success.hidden = false;
-        }, 900);
       });
     }
   } catch (e) {}

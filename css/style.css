@@ -68,7 +68,10 @@ a{color:inherit}
 .btn-text:hover{color:var(--ink)}
 
 /* ── SECTION COMMONS ── */
-.section{position:relative;z-index:10;background:rgba(5,6,8,.9);padding:112px 24px;scroll-margin-top:84px}
+/* default = opaque, sphere hidden (dense card content needs the contrast);
+   --sphere-visible = thin dark tint only, lets the 3D background show through */
+.section{position:relative;z-index:10;background:rgba(5,6,8,.94);padding:112px 24px;scroll-margin-top:84px;transition:background .3s}
+.section--sphere-visible{background:rgba(5,6,8,.4)}
 .section--border{border-top:1px solid var(--line)}
 .wrap{max-width:1200px;margin:0 auto}
 .wrap--narrow{max-width:760px}
@@ -109,26 +112,17 @@ a{color:inherit}
 .stat-val{font-size:clamp(34px,5vw,58px);font-weight:900;background:linear-gradient(to bottom,#fff,rgba(255,255,255,.6));-webkit-background-clip:text;background-clip:text;color:transparent}
 .stat-lbl{margin-top:10px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu4)}
 
-/* ── CONTACT FORM ── */
-.contact-form{margin-top:56px}
-.form-fields{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.field{display:flex;flex-direction:column;gap:8px}
-.field--full{grid-column:1/-1}
-.field span:first-child{font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--mu4)}
-.field input,.field select{width:100%;background:var(--glass);border:1px solid var(--line2);color:var(--ink);font-family:inherit;font-size:14px;padding:16px 20px;border-radius:16px;outline:none;backdrop-filter:blur(20px);transition:border-color .25s;appearance:none;-webkit-appearance:none}
-.field input::placeholder{color:var(--mu3)}
-.field input:focus,.field select:focus{border-color:rgba(57,255,143,.5)}
-.field select option{background:#0a0e14;color:#fff}
-.select-wrap{position:relative}
-.select-chevron{position:absolute;right:20px;bottom:16px;width:16px;height:16px;color:var(--mu4);pointer-events:none}
-.form-error{grid-column:1/-1;font-size:14px;color:var(--err)}
-.form-fields .btn-primary{border:none}
-.form-fields button:disabled{opacity:.6;cursor:not-allowed}
-.form-success{display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;border:1px solid var(--line2);background:var(--glass);border-radius:24px;padding:64px 32px;backdrop-filter:blur(20px)}
-.success-icon{width:48px;height:48px;border-radius:50%;background:rgba(57,255,143,.15);color:var(--green);display:flex;align-items:center;justify-content:center}
-.success-icon svg{width:24px;height:24px}
-.success-title{font-size:18px;font-weight:600;color:var(--ink)}
-.success-sub{max-width:280px;font-size:14px;color:var(--mu5)}
+/* ── CONTACT LINKS (no form — nothing personal gets collected on-site) ── */
+.contact-links{margin-top:56px;display:flex;flex-direction:column;gap:16px}
+.contact-link{display:flex;align-items:center;gap:20px;padding:24px 28px;border-radius:20px;border:1px solid var(--line2);background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);text-decoration:none;color:var(--ink);transition:border-color .25s,transform .25s}
+.contact-link:hover{border-color:rgba(57,255,143,.5);transform:translateX(4px)}
+.contact-link-icon{flex-shrink:0;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;color:var(--green)}
+.contact-link-icon svg{width:20px;height:20px}
+.contact-link-body{flex:1;display:flex;flex-direction:column;gap:2px}
+.contact-link-label{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--mu4)}
+.contact-link-value{font-size:16px;font-weight:600;color:var(--ink)}
+.contact-link-arrow{font-size:18px;color:var(--mu4);transition:transform .25s,color .25s}
+.contact-link:hover .contact-link-arrow{transform:translateX(4px);color:var(--green)}
 
 /* ── FOOTER ── */
 .site-footer{position:relative;z-index:10;background:var(--bg);border-top:1px solid var(--line);padding:44px 24px}
@@ -150,7 +144,6 @@ a{color:inherit}
   .nav-links,.nav-cta{display:none}
   .nav-burger{display:flex}
   .card-grid{grid-template-columns:1fr}
-  .form-fields{grid-template-columns:1fr}
   .stat-panel{grid-template-columns:1fr 1fr;row-gap:32px}
   .section{padding:80px 20px}
 }
