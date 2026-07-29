@@ -13,6 +13,17 @@
     });
   }
 
+  /* ---------- section nav links: let the hash jump/scroll happen natively (keeps
+     back/forward working), then wipe the #hash from the address bar right after ---------- */
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    if (a.getAttribute("href").length < 2) return;
+    a.addEventListener("click", function () {
+      window.setTimeout(function () {
+        history.pushState(null, null, window.location.pathname + window.location.search);
+      }, 0);
+    });
+  });
+
   /* ---------- mobile nav ---------- */
   var burger = document.getElementById("burger");
   var navMobile = document.getElementById("navMobile");
