@@ -2,6 +2,17 @@
 (function () {
   "use strict";
 
+  /* ---------- logo: scroll to top instead of navigating (avoids a bare "#" showing up in the URL) ---------- */
+  var logoLink = document.querySelector(".logo[href]");
+  if (logoLink) {
+    logoLink.addEventListener("click", function (e) {
+      if (logoLink.pathname === window.location.pathname) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    });
+  }
+
   /* ---------- mobile nav ---------- */
   var burger = document.getElementById("burger");
   var navMobile = document.getElementById("navMobile");
