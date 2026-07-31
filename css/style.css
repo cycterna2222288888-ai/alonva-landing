@@ -103,6 +103,21 @@ a{color:inherit}
 .card h3{position:relative;margin-top:24px;font-size:21px;font-weight:600;color:var(--ink)}
 .card p{position:relative;margin-top:12px;font-size:15px;line-height:1.65;color:var(--mu5)}
 
+/* ── EQUIPMENT TEASER (Solutions section, links out to the catalog page) ── */
+.equip-teaser{margin-top:56px;text-align:center}
+
+/* ── EQUIPMENT CATALOG PAGE (real AVK Group catalog items) ── */
+.equip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.equip-item{display:flex;flex-direction:column;border-radius:20px;overflow:hidden;border:1px solid var(--line2);background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);text-decoration:none;transition:border-color .3s,transform .3s,box-shadow .3s}
+.equip-item:hover{border-color:rgba(57,255,143,.5);transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.equip-item-img{display:flex;align-items:center;justify-content:center;aspect-ratio:4/3;background:#f4f4f2;padding:28px;box-sizing:border-box}
+.equip-item-img img{max-width:100%;max-height:100%;object-fit:contain}
+.equip-item-body{padding:22px 24px 26px}
+.equip-item-cat{display:block;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--green);margin-bottom:8px}
+.equip-item-body h3{font-size:17px;font-weight:600;line-height:1.35;color:var(--ink)}
+.equip-item-link{display:inline-block;margin-top:14px;font-size:12.5px;font-weight:500;color:var(--mu5);transition:color .25s}
+.equip-item:hover .equip-item-link{color:var(--green)}
+
 /* ── STATS ── */
 .tabs-wrap{margin-top:40px;display:flex;justify-content:center}
 .tabs{position:relative;display:inline-flex;background:var(--glass);border:1px solid var(--line2);border-radius:999px;padding:4px;backdrop-filter:blur(20px)}
@@ -149,6 +164,7 @@ a{color:inherit}
   .nav-links,.nav-cta,.nav > .lang-sw{display:none}
   .nav-burger{display:flex}
   .card-grid{grid-template-columns:1fr}
+  .equip-grid{grid-template-columns:repeat(2,1fr)}
   .stat-panel{grid-template-columns:1fr 1fr;row-gap:32px}
   .section{padding:80px 20px}
 }
@@ -156,6 +172,7 @@ a{color:inherit}
   .hero-btns{flex-direction:column;width:100%}
   .hero-btns .btn-primary,.hero-btns .btn-text{width:100%;text-align:center;justify-content:center}
   .card{padding:28px}
+  .equip-grid{grid-template-columns:1fr}
   .foot-inner{flex-direction:column;align-items:flex-start}
   .foot-meta{align-items:flex-start}
 }
