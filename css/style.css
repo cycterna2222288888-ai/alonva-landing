@@ -120,6 +120,19 @@ a{color:inherit}
 .equip-item-link{display:inline-block;margin-top:14px;font-size:12.5px;font-weight:500;color:var(--mu5);transition:color .25s}
 .equip-item:hover .equip-item-link{color:var(--green)}
 
+/* ── SERVICES PAGE ── */
+.service-block{display:grid;grid-template-columns:72px 1fr;gap:32px;padding:48px 0;border-top:1px solid var(--line)}
+.service-block:first-child{border-top:none;padding-top:0}
+.service-icon-wrap{position:relative;width:72px;height:72px;display:flex;align-items:center;justify-content:center;color:var(--blue)}
+.service-icon-wrap svg{position:relative;width:38px;height:38px}
+.service-icon-wrap .icon-pulse{position:absolute;inset:0;border-radius:50%;background:var(--blue);filter:blur(18px);opacity:.3}
+.service-body h3{font-size:24px;font-weight:600;color:var(--ink)}
+.service-body>p{margin-top:14px;font-size:16px;line-height:1.7;color:var(--mu5);max-width:640px}
+.service-list{margin-top:24px;display:flex;flex-direction:column;gap:12px}
+.service-list li{display:flex;align-items:flex-start;gap:12px;font-size:14.5px;line-height:1.5;color:var(--mu6)}
+.service-list svg{flex-shrink:0;width:18px;height:18px;margin-top:2px;color:var(--green)}
+.service-body .btn-text{margin-top:20px;margin-left:-24px}
+
 /* ── STATS ── */
 .tabs-wrap{margin-top:40px;display:flex;justify-content:center}
 .tabs{position:relative;display:inline-flex;background:var(--glass);border:1px solid var(--line2);border-radius:999px;padding:4px;backdrop-filter:blur(20px)}
@@ -167,6 +180,7 @@ a{color:inherit}
   .nav-burger{display:flex}
   .card-grid{grid-template-columns:1fr}
   .equip-grid{grid-template-columns:repeat(2,1fr)}
+  .service-block{grid-template-columns:1fr;gap:16px}
   .stat-panel{grid-template-columns:1fr 1fr;row-gap:32px}
   .section{padding:80px 20px}
 }
