@@ -106,7 +106,7 @@ a{color:inherit}
 .card p{position:relative;margin-top:12px;font-size:15px;line-height:1.65;color:var(--mu5)}
 
 /* ── EQUIPMENT TEASER (Solutions section, links out to the catalog page) ── */
-.equip-teaser{margin-top:56px;text-align:center}
+.equip-teaser{margin-top:56px;display:flex;flex-wrap:wrap;justify-content:center;gap:4px 32px}
 
 /* ── EQUIPMENT CATALOG PAGE (real AVK Group catalog items) ── */
 .equip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
