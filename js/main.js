@@ -13,16 +13,43 @@
     });
   }
 
-  /* ---------- section nav links: let the hash jump/scroll happen natively (keeps
-     back/forward working), then wipe the #hash from the address bar right after ---------- */
-  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
-    if (a.getAttribute("href").length < 2) return;
-    a.addEventListener("click", function () {
-      window.setTimeout(function () {
-        history.pushState(null, null, window.location.pathname + window.location.search);
-      }, 0);
-    });
-  });
+  /* ---------- URL hash follows the section on screen while scrolling ----------
+     history.replaceState, not pushState: pushing on every scroll step would fill
+     browser history with one entry per step, and "back" would flip through
+     sections instead of leaving the page. Applied on a debounce after the scroll
+     settles, so a native anchor jump (html{scroll-behavior:smooth}, above) doesn't
+     get its hash overwritten mid-flight by a section it only passed on the way.
+     On the very first section (hero, top of page) the hash is cleared entirely —
+     that keeps the old "no bare #hero in the address bar" behavior this replaces,
+     just driven by scroll position instead of by intercepting every click. */
+  try {
+    var hashSections = Array.prototype.slice.call(document.querySelectorAll("main section[id]"));
+    if (hashSections.length && "IntersectionObserver" in window) {
+      var siteHeader = document.querySelector(".site-header");
+      var hashCandidate = null;
+      var hashTimer = null;
+      var applyHash = function () {
+        if (hashCandidate === null) return;
+        var isTop = hashCandidate === hashSections[0].id;
+        var nextHash = isTop ? "" : "#" + hashCandidate;
+        if (window.location.hash !== nextHash) {
+          history.replaceState(null, null, window.location.pathname + window.location.search + nextHash);
+        }
+      };
+      var hashObserver = new IntersectionObserver(function (entries) {
+        var visible = entries.filter(function (e) { return e.isIntersecting; });
+        if (!visible.length) return;
+        visible.sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+        hashCandidate = visible[0].target.id;
+        window.clearTimeout(hashTimer);
+        hashTimer = window.setTimeout(applyHash, 250);
+      }, {
+        rootMargin: "-" + (siteHeader ? siteHeader.offsetHeight : 0) + "px 0px -60% 0px",
+        threshold: 0,
+      });
+      hashSections.forEach(function (s) { hashObserver.observe(s); });
+    }
+  } catch (e) {}
 
   /* ---------- mobile nav ---------- */
   var burger = document.getElementById("burger");
